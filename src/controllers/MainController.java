@@ -19,6 +19,8 @@ import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
+import javafx.scene.image.Image;
+import javafx.scene.image.ImageView;
 import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
@@ -39,6 +41,10 @@ public class MainController {
 
 	@FXML
     private Button bCalculateParity, bRecoverDisk;
+
+    @FXML
+    private ImageView imageView;
+
 	@FXML
 	public void initialize() {
 		readErrorLabel.setVisible(false);
@@ -47,6 +53,10 @@ public class MainController {
 		
 		//all will be move to controller 
 		disks=new Disk[3];
+
+        Image image = new Image("file:src/background.jpg");
+        imageView.setImage(image);
+
 		/*disks[0]= new Disk("C:","0111");
 		disks[1]= new Disk("D:","1111");
 		disks[2]= new Disk("E:","0000");*/
