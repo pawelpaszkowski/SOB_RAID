@@ -8,8 +8,10 @@ import java.time.LocalTime;
 import Device.Disk;
 
 public class Raport {
+
+    private static PrintWriter zapis;
 	public static void makeRaport(Disk [] disk, String fileName, String inputData) {
-		  PrintWriter zapis;
+
 		  LocalDateTime localTime= LocalDateTime.from(LocalDateTime.now());
 		try {
 			zapis = new PrintWriter("raport_raid.txt");
@@ -32,13 +34,38 @@ public class Raport {
 			zapis.println("Disk id: "+disk[2].getId());
 			zapis.println("Disk name: "+disk[2].getName());
 			zapis.println("Disk data: "+disk[2].getData()+"\n");
+
 			
-			zapis.println("INJECTED ERRORS:");
-			
-			zapis.close();
+			//zapis.close();
 		} catch (FileNotFoundException e) {
 			System.out.println("Writing failed.");
 			e.printStackTrace();
 		}
 	}
+
+    public static void writeDisks(Disk [] disk, String comment) {
+        LocalDateTime localTime= LocalDateTime.from(LocalDateTime.now());
+
+
+            zapis.println(comment);
+            zapis.println("Disk id: "+disk[0].getId());
+            zapis.println("Disk name: "+disk[0].getName());
+            zapis.println("Disk data: "+disk[0].getData());
+
+            zapis.println("Disk id: "+disk[1].getId());
+            zapis.println("Disk name: "+disk[1].getName());
+            zapis.println("Disk data: "+disk[1].getData());
+
+            zapis.println("Disk id: "+disk[2].getId());
+            zapis.println("Disk name: "+disk[2].getName());
+            zapis.println("Disk data: "+disk[2].getData()+"\n");
+
+
+
+
+    }
+
+    public static void closeFile(){
+	    zapis.close();
+    }
 }

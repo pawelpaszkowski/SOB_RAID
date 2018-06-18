@@ -2,9 +2,11 @@ package controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.Arrays;
 import java.util.LinkedList;
 import java.util.List;
 import java.util.Scanner;
+import java.util.stream.Collectors;
 
 import Device.Disk;
 import Device.Raid;
@@ -45,11 +47,11 @@ public class MainController {
 		
 		//all will be move to controller 
 		disks=new Disk[3];
-		disks[0]= new Disk("C:","0111");
+		/*disks[0]= new Disk("C:","0111");
 		disks[1]= new Disk("D:","1111");
-		disks[2]= new Disk("E:","0000");
+		disks[2]= new Disk("E:","0000");*/
 		
-		System.out.println("Starting data:");
+		/*System.out.println("Starting data:");
 		System.out.println(disks[0]);
 		System.out.println(disks[1]);
 		System.out.println(disks[2]);
@@ -71,7 +73,7 @@ public class MainController {
 		System.out.println(disks[0]);
 		System.out.println(disks[1]);
 		System.out.println(disks[2]);
-		
+		*/
 //		FXMLLoader loader= new FXMLLoader();
 //		loader.setLocation(this.getClass().getResource("../../../resources/fxml/signin.fxml"));
 		//AnchorPane anchorPane= null;
@@ -101,7 +103,7 @@ public class MainController {
 			  Scanner in = new Scanner(file);
 			  input = in.nextLine();
 			  readErrorLabel.setVisible(false);
-			  Raport.makeRaport(disks, fileName, input);
+			  //Raport.makeRaport(disks, fileName, input);
 			  System.out.println(input);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -131,30 +133,41 @@ public class MainController {
     public void changeDisk1(){
 	    bRecoverDisk.setDisable(false);
         ObservableList<String> obsDisk1 = disk1.getItems();
+        ObservableList<String> obsDisk2 = disk2.getItems();
+        ObservableList<String> obsDisk3 = disk3.getItems();
         for(int i = 0; i<obsDisk1.size(); i++){
             obsDisk1.set(i, "XXXX");
         }
         disk1.setItems(obsDisk1);
+        writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER CHANGING DISK 1");
     }
 
     @FXML
     public void changeDisk2(){
         bRecoverDisk.setDisable(false);
+        ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
+        ObservableList<String> obsDisk3 = disk3.getItems();
         for(int i = 0; i<obsDisk2.size(); i++){
             obsDisk2.set(i, "XXXX");
         }
         disk2.setItems(obsDisk2);
+
+        writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER CHANGING DISK 2");
     }
 
     @FXML
     public void changeDisk3(){
         bRecoverDisk.setDisable(false);
+        ObservableList<String> obsDisk1 = disk1.getItems();
+        ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
         for(int i = 0; i<obsDisk3.size(); i++){
             obsDisk3.set(i, "XXXX");
         }
         disk3.setItems(obsDisk3);
+
+        writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER CHANGING DISK 1");
     }
 
     @FXML
@@ -176,9 +189,13 @@ public class MainController {
                 obsDisk3.set(i,Raid.xor(obsDisk1.get(i), obsDisk2.get(i)));
             }
         }
+
+        writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER RECOVERY");
     }
 
-	@FXML
+
+
+    @FXML
 	public void putDataOnDisks(){
 	    bCalculateParity.setDisable(false);
 		int index = 0;
@@ -223,6 +240,10 @@ public class MainController {
             dividedData3.add("XXXX");
         }
 
+        disks[0] = new Disk("A", dividedData1);
+        disks[1] = new Disk("B", dividedData2);
+        disks[2] = new Disk("C", dividedData3);
+        Raport.makeRaport(disks, readFileTextField.getText(), inputDataLabel.getText());
 		ObservableList<String> obsDisk1 = FXCollections.observableArrayList(dividedData1);
 		ObservableList<String> obsDisk2 = FXCollections.observableArrayList(dividedData2);
 		ObservableList<String> obsDisk3 = FXCollections.observableArrayList(dividedData3);
@@ -247,13 +268,19 @@ public class MainController {
             }
         }
 
+        writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER PARITY");
         disk1.setItems(obsDisk1);
         disk2.setItems(obsDisk2);
         disk3.setItems(obsDisk3);
     }
 
 
-
+    private void writeToRaport(ObservableList<String> obsDisk1, ObservableList<String> obsDisk2, ObservableList<String> obsDisk3, String s) {
+        disks[0].setData(obsDisk1.subList(0, obsDisk1.size()));
+        disks[1].setData(obsDisk2.subList(0, obsDisk2.size()));
+        disks[2].setData(obsDisk3.subList(0, obsDisk3.size()));
+        Raport.writeDisks(disks, s);
+    }
 	public void setScreen(AnchorPane anchorPane){
 
 		mainPane.getChildren().add(anchorPane);

@@ -34,4 +34,9 @@ public class Main extends Application {
 		launch(args);
 		
 	}
+
+    @Override
+    public void stop(){
+        Raport.closeFile();
+    }
 }

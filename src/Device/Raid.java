@@ -7,7 +7,7 @@ import javafx.scene.control.ListView;
 import java.util.Random;
 
 public class Raid {
-	public static void addParityBit(Disk disk) {
+	/*public static void addParityBit(Disk disk) {
 		int numberOfOnes=0;
 		String bits=disk.getData();
 		for (int i=0; i<bits.length(); ++i)
@@ -22,7 +22,7 @@ public class Raid {
 	
 	//changing random bit- simulating error
 	public static void changeRandomBit(Disk disk) {
-		String bits=disk.getData();
+		String bits=disk.getData().get(0);
 		String bitsWithError="";
 		Random random=new Random();
 		int numberOfBit=random.nextInt(bits.length());
@@ -39,7 +39,7 @@ public class Raid {
 		for (int i=numberOfBit+1; i<bits.length(); ++i)
 			bitsWithError+=bits.charAt(i);
 		disk.setData(bitsWithError);
-	}
+	}*/
 
     public static String xor(String firstData, String secondData) {
         char[] xorOperation = new char[4];

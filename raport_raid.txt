@@ -1,19 +1,51 @@
 GENERAL RAPORT- RAID 5:
-Date of generating: 2018-06-18T22:09:27.476
+Date of generating: 2018-06-18T23:38:14.952
 
 INPUT DATA:
 Given name of input file: C:\Users\Paweł Paszkowski\Desktop\input.txt
-Input data: 10010
+Input data: 10010111010001101110010101100101
 
 ALL DISKS:
 Disk id: 1
-Disk name: C:
-Disk data: 01010
+Disk name: A
+Disk data: [1001, 0100, XXXX, 0110]
 Disk id: 2
-Disk name: D:
-Disk data: 11011
+Disk name: B
+Disk data: [0111, XXXX, 1110, 0101]
 Disk id: 3
-Disk name: E:
-Disk data: 10001
+Disk name: C
+Disk data: [XXXX, 0110, 0101, XXXX]
 
-INJECTED ERRORS:
+DISK STATE AFTER PARITY
+Disk id: 1
+Disk name: A
+Disk data: [1001, 0100, 1011, 0110]
+Disk id: 2
+Disk name: B
+Disk data: [0111, 0010, 1110, 0101]
+Disk id: 3
+Disk name: C
+Disk data: [1110, 0110, 0101, 0011]
+
+DISK STATE AFTER CHANGING DISK 1
+Disk id: 1
+Disk name: A
+Disk data: [XXXX, XXXX, XXXX, XXXX]
+Disk id: 2
+Disk name: B
+Disk data: [0111, 0010, 1110, 0101]
+Disk id: 3
+Disk name: C
+Disk data: [1110, 0110, 0101, 0011]
+
+DISK STATE AFTER RECOVERY
+Disk id: 1
+Disk name: A
+Disk data: [1001, 0100, 1011, 0110]
+Disk id: 2
+Disk name: B
+Disk data: [0111, 0010, 1110, 0101]
+Disk id: 3
+Disk name: C
+Disk data: [1110, 0110, 0101, 0011]
+
