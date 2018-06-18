@@ -1,19 +1,19 @@
 GENERAL RAPORT- RAID 5:
-Date of generating: 2018-06-16T21:12:58.469
+Date of generating: 2018-06-17T21:40:01.704
 
 INPUT DATA:
-Given name of input file: input.txt
-Input data: 010101010110000000000000000000000000000000000000000000000000000001
+Given name of input file: C:\Users\Paweł Paszkowski\Desktop\input.txt
+Input data: 10010111010001101110010101100101
 
 ALL DISKS:
 Disk id: 1
 Disk name: C:
-Disk data: 01010
+Disk data: 00110
 Disk id: 2
 Disk name: D:
 Disk data: 11101
 Disk id: 3
 Disk name: E:
-Disk data: 00101
+Disk data: 01001
 
 INJECTED ERRORS:

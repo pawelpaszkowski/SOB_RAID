@@ -2,16 +2,22 @@ package controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
+import java.util.LinkedList;
+import java.util.List;
 import java.util.Scanner;
 
 import Device.Disk;
 import Device.Raid;
 import io.Raport;
+import javafx.collections.FXCollections;
+import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
 import javafx.scene.control.Label;
+import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
 import javafx.scene.layout.AnchorPane;
+import javafx.stage.FileChooser;
 
 public class MainController {
 	Disk [] disks;
@@ -24,6 +30,9 @@ public class MainController {
 	
 	@FXML
 	private Label inputDataLabel, readErrorLabel;
+
+	@FXML
+	private ListView<String> disk1, disk2, disk3;
 	
 	@FXML
 	public void initialize() {
@@ -97,7 +106,45 @@ public class MainController {
 		
 		inputDataLabel.setText(input);
 	}
-	
+
+	@FXML
+	public void findFile() {
+		final FileChooser fileChooser = new FileChooser();
+		fileChooser.getExtensionFilters().addAll(
+				new FileChooser.ExtensionFilter("TXT", "*.txt"));
+		File file = fileChooser.showOpenDialog(null);
+		if(file == null) System.out.println("NULL!");
+		readFileTextField.setText(file.getAbsolutePath());
+	}
+
+	@FXML
+	public void putDataOnDisks(){
+		int index = 0;
+		List<String> dividedData1 = new LinkedList<>();
+		List<String> dividedData2 = new LinkedList<>();
+		List<String> dividedData3 = new LinkedList<>();
+		String data = inputDataLabel.getText();
+		int nrDisk = 1;
+		while (index < data.length()) {
+			if(nrDisk % 3 == 1){
+				dividedData1.add(data.substring(index, Math.min(index + 4,data.length())));
+			} else if(nrDisk % 3 == 2) {
+				dividedData2.add(data.substring(index, Math.min(index + 4,data.length())));
+			} else if(nrDisk % 3 == 0) {
+				dividedData3.add(data.substring(index, Math.min(index + 4,data.length())));
+			}
+			nrDisk++;
+			index += 4;
+		}
+
+		ObservableList<String> obsDisk1 = FXCollections.observableArrayList(dividedData1);
+		ObservableList<String> obsDisk2 = FXCollections.observableArrayList(dividedData2);
+		ObservableList<String> obsDisk3 = FXCollections.observableArrayList(dividedData3);
+		disk1.setItems(obsDisk1);
+		disk2.setItems(obsDisk2);
+		disk3.setItems(obsDisk3);
+	}
+
 	public void setScreen(AnchorPane anchorPane){
 
 		mainPane.getChildren().add(anchorPane);
