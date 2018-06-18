@@ -13,6 +13,7 @@ import javafx.collections.FXCollections;
 import javafx.collections.ObservableList;
 import javafx.fxml.FXML;
 import javafx.fxml.FXMLLoader;
+import javafx.scene.control.Button;
 import javafx.scene.control.Label;
 import javafx.scene.control.ListView;
 import javafx.scene.control.TextField;
@@ -33,10 +34,14 @@ public class MainController {
 
 	@FXML
 	private ListView<String> disk1, disk2, disk3;
-	
+
+	@FXML
+    private Button bCalculateParity, bRecoverDisk;
 	@FXML
 	public void initialize() {
 		readErrorLabel.setVisible(false);
+		bCalculateParity.setDisable(true);
+		bRecoverDisk.setDisable(true);
 		
 		//all will be move to controller 
 		disks=new Disk[3];
@@ -103,7 +108,12 @@ public class MainController {
 			readErrorLabel.setVisible(true);
 			e.printStackTrace();
 		}
-		
+		if(input.length() % 8 != 0){
+		      int nrOfZeros = Math.abs((input.length() % 8) - 8);
+		      for(int i = 0; i < nrOfZeros; i++){
+		          input = "0".concat(input);
+              }
+        }
 		inputDataLabel.setText(input);
 	}
 
@@ -119,26 +129,58 @@ public class MainController {
 
     @FXML
     public void changeDisk1(){
+	    bRecoverDisk.setDisable(false);
         ObservableList<String> obsDisk1 = disk1.getItems();
         for(int i = 0; i<obsDisk1.size(); i++){
             obsDisk1.set(i, "XXXX");
         }
-
         disk1.setItems(obsDisk1);
     }
 
     @FXML
     public void changeDisk2(){
-
+        bRecoverDisk.setDisable(false);
+        ObservableList<String> obsDisk2 = disk2.getItems();
+        for(int i = 0; i<obsDisk2.size(); i++){
+            obsDisk2.set(i, "XXXX");
+        }
+        disk2.setItems(obsDisk2);
     }
 
     @FXML
     public void changeDisk3(){
+        bRecoverDisk.setDisable(false);
+        ObservableList<String> obsDisk3 = disk3.getItems();
+        for(int i = 0; i<obsDisk3.size(); i++){
+            obsDisk3.set(i, "XXXX");
+        }
+        disk3.setItems(obsDisk3);
+    }
 
+    @FXML
+    public void recoverDisk(){
+        bRecoverDisk.setDisable(true);
+        ObservableList<String> obsDisk1 = disk1.getItems();
+        ObservableList<String> obsDisk2 = disk2.getItems();
+        ObservableList<String> obsDisk3 = disk3.getItems();
+        if(obsDisk1.contains("XXXX")){
+            for(int i=0; i < obsDisk1.size(); i++){
+                obsDisk1.set(i,Raid.xor(obsDisk2.get(i), obsDisk3.get(i)));
+            }
+        } else if(obsDisk2.contains("XXXX")){
+            for(int i=0; i < obsDisk2.size(); i++){
+                obsDisk2.set(i,Raid.xor(obsDisk1.get(i), obsDisk3.get(i)));
+            }
+        } else if(obsDisk3.contains("XXXX")){
+            for(int i=0; i < obsDisk3.size(); i++){
+                obsDisk3.set(i,Raid.xor(obsDisk1.get(i), obsDisk2.get(i)));
+            }
+        }
     }
 
 	@FXML
 	public void putDataOnDisks(){
+	    bCalculateParity.setDisable(false);
 		int index = 0;
 		List<String> dividedData1 = new LinkedList<>();
 		List<String> dividedData2 = new LinkedList<>();
@@ -191,6 +233,7 @@ public class MainController {
 
 	@FXML
 	public void calculateParity(){
+	    bCalculateParity.setDisable(true);
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();

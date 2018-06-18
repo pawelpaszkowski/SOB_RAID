@@ -25,7 +25,7 @@
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="335.0" layoutY="125.0" mnemonicParsing="false" onAction="#readData" prefHeight="25.0" prefWidth="102.0" text="Odczytaj dane" />
+      <Button layoutX="335.0" layoutY="116.0" mnemonicParsing="false" onAction="#readData" prefHeight="25.0" prefWidth="102.0" text="Odczytaj dane" />
       <AnchorPane layoutX="64.0" layoutY="293.0" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: white; -fx-border-radius: 15px;">
          <children>
             <Label alignment="CENTER" prefHeight="30.0" prefWidth="180.0" text="Dysk 1">
@@ -116,10 +116,11 @@
          </font>
       </Label>
       <Button layoutX="555.0" layoutY="84.0" mnemonicParsing="false" onAction="#findFile" text="..." />
-      <Button layoutX="324.0" layoutY="165.0" mnemonicParsing="false" onAction="#putDataOnDisks" text="Wpisz dane na dyski" />
-      <Button layoutX="511.0" layoutY="165.0" mnemonicParsing="false" onAction="#calculateParity" text="Button" />
+      <Button layoutX="324.0" layoutY="153.0" mnemonicParsing="false" onAction="#putDataOnDisks" text="Wpisz dane na dyski" />
+      <Button fx:id="bCalculateParity" layoutX="511.0" layoutY="165.0" mnemonicParsing="false" onAction="#calculateParity" text="Zapisz bity parzystości" />
       <Button layoutX="40.0" layoutY="543.0" mnemonicParsing="false" onAction="#changeDisk1" text="Wymień dysk" />
       <Button layoutX="283.0" layoutY="543.0" mnemonicParsing="false" onAction="#changeDisk2" text="Wymień dysk" />
       <Button layoutX="511.0" layoutY="543.0" mnemonicParsing="false" onAction="#changeDisk3" text="Wymień dysk" />
+      <Button fx:id="bRecoverDisk" layoutX="340.0" layoutY="192.0" mnemonicParsing="false" onAction="#recoverDisk" text="Odzyskaj dane" />
    </children>
 </AnchorPane>

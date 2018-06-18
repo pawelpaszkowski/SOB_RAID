@@ -1,6 +1,9 @@
 package Device;
 
 
+import javafx.collections.ObservableList;
+import javafx.scene.control.ListView;
+
 import java.util.Random;
 
 public class Raid {
@@ -53,4 +56,6 @@ public class Raid {
         }
         return String.valueOf(xorOperation);
     }
+
+
 }
