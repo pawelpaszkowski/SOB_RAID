@@ -1,5 +1,6 @@
 package Device;
 
+
 import java.util.Random;
 
 public class Raid {
@@ -36,5 +37,20 @@ public class Raid {
 			bitsWithError+=bits.charAt(i);
 		disk.setData(bitsWithError);
 	}
-	
+
+    public static String xor(String firstData, String secondData) {
+        char[] xorOperation = new char[4];
+        for(int i = 0; i<xorOperation.length; i++){
+            if(firstData.charAt(i) == '0' && secondData.charAt(i) == '0'){
+                xorOperation[i] = '0';
+            } else if(firstData.charAt(i) == '0' && secondData.charAt(i) == '1'){
+                xorOperation[i] = '1';
+            } else if(firstData.charAt(i) == '1' && secondData.charAt(i) == '0'){
+                xorOperation[i] = '1';
+            } else{
+                xorOperation[i] = '0';
+            }
+        }
+        return String.valueOf(xorOperation);
+    }
 }

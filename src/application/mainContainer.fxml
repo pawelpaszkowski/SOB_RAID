@@ -33,7 +33,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ListView fx:id="disk1" layoutX="-10.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="disk1" layoutY="30.0" prefHeight="200.0" prefWidth="190.0" />
          </children>
          <effect>
             <Lighting>
@@ -53,7 +53,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ListView fx:id="disk2" layoutX="-10.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="disk2" layoutY="30.0" prefHeight="200.0" prefWidth="190.0" />
          </children>
          <effect>
             <Lighting>
@@ -83,7 +83,7 @@
                   <Font size="20.0" />
                </font>
             </Label>
-            <ListView fx:id="disk3" layoutX="-10.0" layoutY="30.0" prefHeight="200.0" prefWidth="200.0" />
+            <ListView fx:id="disk3" layoutY="30.0" prefHeight="200.0" prefWidth="190.0" />
          </children>
       </AnchorPane>
       <AnchorPane layoutX="66.0" layoutY="232.0" prefHeight="40.0" prefWidth="640.0" style="-fx-background-color: white;">
@@ -117,5 +117,9 @@
       </Label>
       <Button layoutX="555.0" layoutY="84.0" mnemonicParsing="false" onAction="#findFile" text="..." />
       <Button layoutX="324.0" layoutY="165.0" mnemonicParsing="false" onAction="#putDataOnDisks" text="Wpisz dane na dyski" />
+      <Button layoutX="511.0" layoutY="165.0" mnemonicParsing="false" onAction="#calculateParity" text="Button" />
+      <Button layoutX="40.0" layoutY="543.0" mnemonicParsing="false" onAction="#changeDisk1" text="Wymień dysk" />
+      <Button layoutX="283.0" layoutY="543.0" mnemonicParsing="false" onAction="#changeDisk2" text="Wymień dysk" />
+      <Button layoutX="511.0" layoutY="543.0" mnemonicParsing="false" onAction="#changeDisk3" text="Wymień dysk" />
    </children>
 </AnchorPane>

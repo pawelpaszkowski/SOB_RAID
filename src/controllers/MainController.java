@@ -117,6 +117,26 @@ public class MainController {
 		readFileTextField.setText(file.getAbsolutePath());
 	}
 
+    @FXML
+    public void changeDisk1(){
+        ObservableList<String> obsDisk1 = disk1.getItems();
+        for(int i = 0; i<obsDisk1.size(); i++){
+            obsDisk1.set(i, "XXXX");
+        }
+
+        disk1.setItems(obsDisk1);
+    }
+
+    @FXML
+    public void changeDisk2(){
+
+    }
+
+    @FXML
+    public void changeDisk3(){
+
+    }
+
 	@FXML
 	public void putDataOnDisks(){
 		int index = 0;
@@ -125,17 +145,41 @@ public class MainController {
 		List<String> dividedData3 = new LinkedList<>();
 		String data = inputDataLabel.getText();
 		int nrDisk = 1;
+		int unknownValue = 3;
 		while (index < data.length()) {
 			if(nrDisk % 3 == 1){
-				dividedData1.add(data.substring(index, Math.min(index + 4,data.length())));
+                if(nrDisk != unknownValue){
+                    dividedData1.add(data.substring(index, Math.min(index + 4,data.length())));
+                    index += 4;
+                } else {
+                    dividedData1.add("XXXX");
+                    unknownValue += 5;
+                }
+
 			} else if(nrDisk % 3 == 2) {
-				dividedData2.add(data.substring(index, Math.min(index + 4,data.length())));
+                if(nrDisk != unknownValue){
+                    dividedData2.add(data.substring(index, Math.min(index + 4,data.length())));
+                    index += 4;
+                } else {
+                    dividedData2.add("XXXX");
+                    unknownValue += 2;
+                }
 			} else if(nrDisk % 3 == 0) {
-				dividedData3.add(data.substring(index, Math.min(index + 4,data.length())));
+			    if(nrDisk != unknownValue){
+                    dividedData3.add(data.substring(index, Math.min(index + 4,data.length())));
+                    index += 4;
+                } else {
+			        dividedData3.add("XXXX");
+                    unknownValue += 2;
+                }
+
 			}
+
 			nrDisk++;
-			index += 4;
 		}
+        if(dividedData1.size() != dividedData3.size()){
+            dividedData3.add("XXXX");
+        }
 
 		ObservableList<String> obsDisk1 = FXCollections.observableArrayList(dividedData1);
 		ObservableList<String> obsDisk2 = FXCollections.observableArrayList(dividedData2);
@@ -144,6 +188,28 @@ public class MainController {
 		disk2.setItems(obsDisk2);
 		disk3.setItems(obsDisk3);
 	}
+
+	@FXML
+	public void calculateParity(){
+        ObservableList<String> obsDisk1 = disk1.getItems();
+        ObservableList<String> obsDisk2 = disk2.getItems();
+        ObservableList<String> obsDisk3 = disk3.getItems();
+        for(int i=0; i < obsDisk1.size(); i++){
+            if(obsDisk1.get(i).equals("XXXX")){
+                obsDisk1.set(i,Raid.xor(obsDisk2.get(i), obsDisk3.get(i)));
+            } else if(obsDisk2.get(i).equals("XXXX")){
+                obsDisk2.set(i,Raid.xor(obsDisk1.get(i), obsDisk3.get(i)));
+            } else if(obsDisk3.get(i).equals("XXXX")){
+                obsDisk3.set(i,Raid.xor(obsDisk1.get(i), obsDisk2.get(i)));
+            }
+        }
+
+        disk1.setItems(obsDisk1);
+        disk2.setItems(obsDisk2);
+        disk3.setItems(obsDisk3);
+    }
+
+
 
 	public void setScreen(AnchorPane anchorPane){
 
