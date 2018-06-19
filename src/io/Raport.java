@@ -65,6 +65,11 @@ public class Raport {
 
     }
 
+	public static void writeSeriousError() {
+		zapis.println("DATA LOST!");
+		zapis.println("More than one disk is invalid.");
+	}
+
     public static void closeFile(){
 	    zapis.close();
     }

@@ -25,7 +25,8 @@ import javafx.scene.layout.AnchorPane;
 import javafx.stage.FileChooser;
 
 public class MainController {
-	Disk [] disks;
+	private Disk [] disks;
+	private int spoiledDisk=0;
 	
 	@FXML
 	private AnchorPane mainPane;
@@ -34,13 +35,13 @@ public class MainController {
 	private TextField readFileTextField;
 	
 	@FXML
-	private Label inputDataLabel, readErrorLabel;
+	private Label inputDataLabel, readErrorLabel, labelError;
 
 	@FXML
 	private ListView<String> disk1, disk2, disk3;
 
 	@FXML
-    private Button bCalculateParity, bRecoverDisk;
+    private Button bWriteData, bCalculateParity, bRecoverDisk, bChangeDisk1, bChangeDisk2, bChangeDisk3;
 
     @FXML
     private ImageView imageView;
@@ -48,8 +49,13 @@ public class MainController {
 	@FXML
 	public void initialize() {
 		readErrorLabel.setVisible(false);
+		labelError.setVisible(false);
 		bCalculateParity.setDisable(true);
 		bRecoverDisk.setDisable(true);
+        bWriteData.setDisable(true);
+        bChangeDisk1.setDisable(true);
+        bChangeDisk2.setDisable(true);
+        bChangeDisk3.setDisable(true);
 		
 		//all will be move to controller 
 		disks=new Disk[3];
@@ -114,6 +120,8 @@ public class MainController {
 			  input = in.nextLine();
 			  readErrorLabel.setVisible(false);
 			  //Raport.makeRaport(disks, fileName, input);
+              if (spoiledDisk<=1)
+                 bWriteData.setDisable(false);
 			  System.out.println(input);
 		} catch (FileNotFoundException e) {
 			// TODO Auto-generated catch block
@@ -141,7 +149,17 @@ public class MainController {
 
     @FXML
     public void changeDisk1(){
-	    bRecoverDisk.setDisable(false);
+        spoiledDisk++;
+        boolean AreTwoDiskSpoiled=false;
+        if (spoiledDisk<=1)
+            bRecoverDisk.setDisable(false);
+        else {
+            bRecoverDisk.setDisable(true);
+            bWriteData.setDisable(true);
+            labelError.setVisible(true);
+            if (spoiledDisk==2)
+                AreTwoDiskSpoiled=true;
+        }
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
@@ -150,11 +168,23 @@ public class MainController {
         }
         disk1.setItems(obsDisk1);
         writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER CHANGING DISK 1");
+        if (AreTwoDiskSpoiled)
+            Raport.writeSeriousError();
     }
 
     @FXML
     public void changeDisk2(){
-        bRecoverDisk.setDisable(false);
+        spoiledDisk++;
+        boolean AreTwoDiskSpoiled=false;
+        if (spoiledDisk<=1)
+            bRecoverDisk.setDisable(false);
+        else {
+            bRecoverDisk.setDisable(true);
+            bWriteData.setDisable(true);
+            labelError.setVisible(true);
+            if (spoiledDisk==2)
+                AreTwoDiskSpoiled=true;
+        }
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
@@ -164,11 +194,23 @@ public class MainController {
         disk2.setItems(obsDisk2);
 
         writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER CHANGING DISK 2");
+        if (AreTwoDiskSpoiled)
+            Raport.writeSeriousError();
     }
 
     @FXML
     public void changeDisk3(){
-        bRecoverDisk.setDisable(false);
+        spoiledDisk++;
+        boolean AreTwoDiskSpoiled=false;
+        if (spoiledDisk<=1)
+            bRecoverDisk.setDisable(false);
+        else {
+            bRecoverDisk.setDisable(true);
+            bWriteData.setDisable(true);
+            labelError.setVisible(true);
+            if (spoiledDisk==2)
+                AreTwoDiskSpoiled=true;
+        }
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
@@ -178,10 +220,13 @@ public class MainController {
         disk3.setItems(obsDisk3);
 
         writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER CHANGING DISK 1");
+        if (AreTwoDiskSpoiled)
+            Raport.writeSeriousError();
     }
 
     @FXML
     public void recoverDisk(){
+        spoiledDisk--;
         bRecoverDisk.setDisable(true);
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
@@ -260,6 +305,11 @@ public class MainController {
 		disk1.setItems(obsDisk1);
 		disk2.setItems(obsDisk2);
 		disk3.setItems(obsDisk3);
+        bChangeDisk1.setDisable(true);
+        bChangeDisk2.setDisable(true);
+        bChangeDisk3.setDisable(true);
+        bRecoverDisk.setDisable(true);
+        spoiledDisk=0;
 	}
 
 	@FXML
@@ -282,6 +332,9 @@ public class MainController {
         disk1.setItems(obsDisk1);
         disk2.setItems(obsDisk2);
         disk3.setItems(obsDisk3);
+        bChangeDisk1.setDisable(false);
+        bChangeDisk2.setDisable(false);
+        bChangeDisk3.setDisable(false);
     }
 
 
