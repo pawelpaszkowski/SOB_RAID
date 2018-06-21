@@ -239,97 +239,34 @@ public class MainController {
 
     @FXML
     public void injectErrors1(){
-        Random random=new Random();
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
-        //one number is excluded to not spoiled all bits (there is existing another mechanism for that)
-        int topIndex=obsDisk1.size()*4;
-//        int numberOfBits=random.nextInt(topIdnex)+1;
-        int numberOfBits=Integer.parseInt(numberOfErrors1.getText())-1;
-
-        int numberOfFreeBits=topIndex-indexesOfErrorBits.size();
-
-        if ((0<=numberOfBits) && (numberOfBits<=topIndex-1) && (numberOfFreeBits > numberOfBits)) {
-
-            int randomIndex;
-
-            for (int i = 0; i <= numberOfBits; ) {
-                randomIndex = random.nextInt(topIndex);
-                if (!indexesOfErrorBits.contains(randomIndex)) {
-                    indexesOfErrorBits.add(randomIndex);
-                    i++;
-                }
-            }
-
-            for (int i = 0; i < indexesOfErrorBits.size(); i++)
-                System.out.println(indexesOfErrorBits.get(i) + ", ");
-
-            for (int i = 0; i < obsDisk1.size(); i++) {
-                String portionOfBits = "";
-                for (int j = i * 4; j < i * 4 + 4; j++)
-                    if (indexesOfErrorBits.contains(j))
-                        portionOfBits += "X";
-                    else
-                        portionOfBits += obsDisk1.get(i).substring(j - (i * 4), j - (i * 4) + 1);
-
-                obsDisk1.set(i, portionOfBits + "  (" + obsDisk1.get(i) + ")");
-            }
-
-            disk1.setItems(obsDisk1);
-        }
+        disk1.setItems(generateErrorsBits(obsDisk1, numberOfErrors1));
     }
 
     @FXML
     public void injectErrors2(){
-        Random random=new Random();
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
-        //one number is excluded to not spoiled all bits (there is existing another mechanism for that)
-        int topIndex=obsDisk2.size()*4;
-//        int numberOfBits=random.nextInt(topIdnex)+1;
-        int numberOfBits=Integer.parseInt(numberOfErrors2.getText())-1;
-
-        int numberOfFreeBits=topIndex-indexesOfErrorBits.size();
-
-        if ((0<=numberOfBits) && (numberOfBits<=topIndex-1) && (numberOfFreeBits > numberOfBits)) {
-
-            int randomIndex;
-
-            for (int i = 0; i <= numberOfBits; ) {
-                randomIndex = random.nextInt(topIndex);
-                if (!indexesOfErrorBits.contains(randomIndex)) {
-                    indexesOfErrorBits.add(randomIndex);
-                    i++;
-                }
-            }
-
-            for (int i = 0; i < obsDisk2.size(); i++) {
-                String portionOfBits = "";
-                for (int j = i * 4; j < i * 4 + 4; j++)
-                    if (indexesOfErrorBits.contains(j))
-                        portionOfBits += "X";
-                    else
-                        portionOfBits += obsDisk2.get(i).substring(j - (i * 4), j - (i * 4) + 1);
-
-                obsDisk2.set(i, portionOfBits + "  (" + obsDisk2.get(i) + ")");
-            }
-
-            disk2.setItems(obsDisk2);
-        }
+        disk2.setItems(generateErrorsBits(obsDisk2, numberOfErrors2));
     }
 
     @FXML
     public void injectErrors3(){
-        Random random=new Random();
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
+        disk3.setItems(generateErrorsBits(obsDisk3, numberOfErrors3));
+    }
+
+    public ObservableList<String> generateErrorsBits(ObservableList<String> obsDisk, TextField numberOfErrors){
+        Random random=new Random();
         //one number is excluded to not spoiled all bits (there is existing another mechanism for that)
-        int topIndex=obsDisk3.size()*4;
+        int topIndex=obsDisk.size()*4;
 //        int numberOfBits=random.nextInt(topIdnex)+1;
-        int numberOfBits=Integer.parseInt(numberOfErrors3.getText())-1;
+        int numberOfBits=Integer.parseInt(numberOfErrors.getText())-1;
 
         int numberOfFreeBits=topIndex-indexesOfErrorBits.size();
 
@@ -348,19 +285,20 @@ public class MainController {
             for (int i = 0; i < indexesOfErrorBits.size(); i++)
                 System.out.println(indexesOfErrorBits.get(i) + ", ");
 
-            for (int i = 0; i < obsDisk3.size(); i++) {
+            for (int i = 0; i < obsDisk.size(); i++) {
                 String portionOfBits = "";
                 for (int j = i * 4; j < i * 4 + 4; j++)
                     if (indexesOfErrorBits.contains(j))
                         portionOfBits += "X";
                     else
-                        portionOfBits += obsDisk3.get(i).substring(j - (i * 4), j - (i * 4) + 1);
+                        portionOfBits += obsDisk.get(i).substring(j - (i * 4), j - (i * 4) + 1);
 
-                obsDisk3.set(i, portionOfBits + "  (" + obsDisk3.get(i) + ")");
+                obsDisk.set(i, portionOfBits + "  (" + obsDisk.get(i) + ")");
             }
 
-            disk3.setItems(obsDisk3);
+            return obsDisk;
         }
+        return obsDisk;
     }
 
     @FXML

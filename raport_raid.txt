@@ -1,51 +1,29 @@
 GENERAL RAPORT- RAID 5:
-Date of generating: 2018-06-21T21:31:53.601
+Date of generating: 2018-06-21T22:05:04.863
 
 INPUT DATA:
 Given name of input file: input
 Input data: 01010101011000010011011000000001001001110000111010011111
 
 ALL DISKS:
-Disk id: 7
+Disk id: 4
 Disk name: A
 Disk data: [0101, 0110, XXXX, 0000, 0010, XXXX, 1001]
-Disk id: 8
+Disk id: 5
 Disk name: B
 Disk data: [0101, XXXX, 0011, 0001, XXXX, 0000, 1111]
-Disk id: 9
+Disk id: 6
 Disk name: C
 Disk data: [XXXX, 0001, 0110, XXXX, 0111, 1110, XXXX]
 
 DISK STATE AFTER PARITY
-Disk id: 7
+Disk id: 4
 Disk name: A
 Disk data: [0101, 0110, 0101, 0000, 0010, 1110, 1001]
-Disk id: 8
+Disk id: 5
 Disk name: B
 Disk data: [0101, 0111, 0011, 0001, 0101, 0000, 1111]
-Disk id: 9
-Disk name: C
-Disk data: [0000, 0001, 0110, 0001, 0111, 1110, 0110]
-
-DISK STATE AFTER CHANGING DISK 1
-Disk id: 7
-Disk name: A
-Disk data: [XXXX, XXXX, XXXX, XXXX, XXXX, XXXX, XXXX]
-Disk id: 8
-Disk name: B
-Disk data: [0101, 0111, 0011, 0001, 0101, 0000, 1111]
-Disk id: 9
-Disk name: C
-Disk data: [0000, 0001, 0110, 0001, 0111, 1110, 0110]
-
-DISK STATE AFTER RECOVERY
-Disk id: 7
-Disk name: A
-Disk data: [0101, 0110, 0101, 0000, 0010, 1110, 1001]
-Disk id: 8
-Disk name: B
-Disk data: [0101, 0111, 0011, 0001, 0101, 0000, 1111]
-Disk id: 9
+Disk id: 6
 Disk name: C
 Disk data: [0000, 0001, 0110, 0001, 0111, 1110, 0110]
 
