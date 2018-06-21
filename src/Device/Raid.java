@@ -1,11 +1,5 @@
 package Device;
 
-
-import javafx.collections.ObservableList;
-import javafx.scene.control.ListView;
-
-import java.util.Random;
-
 public class Raid {
 	/*public static void addParityBit(Disk disk) {
 		int numberOfOnes=0;
@@ -19,9 +13,11 @@ public class Raid {
 		else
 			disk.setData(bits+"1");
 	}
+
+
 	
 	//changing random bit- simulating error
-	public static void changeRandomBit(Disk disk) {
+	public static void changeRandomNumbersOfBits(Disk disk) {
 		String bits=disk.getData().get(0);
 		String bitsWithError="";
 		Random random=new Random();
@@ -31,7 +27,7 @@ public class Raid {
 			bit='0';
 		else
 			bit ='1';
-		
+
 		//genereting bit with error in random place
 		for (int i=0; i<numberOfBit; ++i)
 			bitsWithError+=bits.charAt(i);
@@ -39,7 +35,8 @@ public class Raid {
 		for (int i=numberOfBit+1; i<bits.length(); ++i)
 			bitsWithError+=bits.charAt(i);
 		disk.setData(bitsWithError);
-	}*/
+	}
+	*/
 
     public static String xor(String firstData, String secondData) {
         char[] xorOperation = new char[4];

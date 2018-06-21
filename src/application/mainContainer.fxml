@@ -25,74 +25,15 @@
             <Image url="@../background.jpg" />
          </image>
       </ImageView>
-      <TextField fx:id="readFileTextField" alignment="CENTER" layoutX="235.0" layoutY="84.0" prefHeight="25.0" prefWidth="302.0" />
-      <Label layoutX="262.0" layoutY="44.0" text="Podaj nazwę pliku z danymi:" textFill="WHITE">
+      <TextField fx:id="readFileTextField" alignment="CENTER" layoutX="235.0" layoutY="68.0" prefHeight="25.0" prefWidth="302.0" />
+      <Label layoutX="262.0" layoutY="35.0" text="Podaj nazwę pliku z danymi:" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="324.0" layoutY="116.0" mnemonicParsing="false" onAction="#readData" prefHeight="25.0" prefWidth="124.0" text="Odczytaj dane" />
-      <AnchorPane layoutX="64.0" layoutY="293.0" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: white; -fx-border-radius: 15px;">
-         <children>
-            <Label alignment="CENTER" prefHeight="30.0" prefWidth="180.0" text="Dysk 1">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <ListView fx:id="disk1" layoutY="30.0" prefHeight="200.0" prefWidth="190.0" />
-         </children>
-         <effect>
-            <Lighting>
-               <bumpInput>
-                  <Shadow />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
-      </AnchorPane>
-      <AnchorPane layoutX="296.0" layoutY="293.0" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: white;">
-         <children>
-            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="180.0" text="Dysk 2">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <ListView fx:id="disk2" layoutY="30.0" prefHeight="200.0" prefWidth="190.0" />
-         </children>
-         <effect>
-            <Lighting>
-               <bumpInput>
-                  <Shadow />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
-      </AnchorPane>
-      <AnchorPane layoutX="526.0" layoutY="293.0" prefHeight="250.0" prefWidth="180.0" style="-fx-background-color: white;">
-         <effect>
-            <Lighting>
-               <bumpInput>
-                  <Shadow />
-               </bumpInput>
-               <light>
-                  <Light.Distant />
-               </light>
-            </Lighting>
-         </effect>
-         <children>
-            <Label alignment="CENTER" prefHeight="30.0" prefWidth="180.0" text="Dysk 3">
-               <font>
-                  <Font size="20.0" />
-               </font>
-            </Label>
-            <ListView fx:id="disk3" layoutY="30.0" prefHeight="200.0" prefWidth="190.0" />
-         </children>
-      </AnchorPane>
-      <AnchorPane layoutX="63.0" layoutY="179.0" prefHeight="40.0" prefWidth="654.0" style="-fx-background-color: white;">
+      <Button layoutX="555.0" layoutY="68.0" mnemonicParsing="false" onAction="#findFile" text="..." />
+      <Button layoutX="324.0" layoutY="105.0" mnemonicParsing="false" onAction="#readData" prefHeight="25.0" prefWidth="124.0" text="Odczytaj dane" />
+      <AnchorPane layoutX="63.0" layoutY="155.0" prefHeight="40.0" prefWidth="654.0" style="-fx-background-color: white;">
          <effect>
             <Lighting>
                <bumpInput>
@@ -116,22 +57,96 @@
             </Label>
          </children>
       </AnchorPane>
-      <Label layoutX="66.0" layoutY="149.0" prefHeight="17.0" prefWidth="317.0" text="Dane wejściowe:" textFill="WHITE">
+      <Button fx:id="bWriteData" layoutX="64.0" layoutY="225.0" mnemonicParsing="false" onAction="#putDataOnDisks" prefHeight="25.0" prefWidth="210.0" text="Wpisz dane na dyski" />
+      <Button fx:id="bCalculateParity" layoutX="285.0" layoutY="225.0" mnemonicParsing="false" onAction="#calculateParity" prefHeight="25.0" prefWidth="210.0" text="Zapisz bity parzystości" />
+      <Button fx:id="bRecoverDisk" layoutX="506.0" layoutY="225.0" mnemonicParsing="false" onAction="#recoverDisk" prefHeight="25.0" prefWidth="210.0" text="Odzyskaj dane" />
+      <AnchorPane layoutX="64.0" layoutY="270.0" prefHeight="230.0" prefWidth="190.0" style="-fx-background-color: white; -fx-border-radius: 15px;">
+         <children>
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="180.0" text="Dysk 1">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ListView fx:id="disk1" layoutY="30.0" prefHeight="190.0" prefWidth="190.0" />
+         </children>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </AnchorPane>
+      <AnchorPane layoutX="296.0" layoutY="270.0" prefHeight="230.0" prefWidth="180.0" style="-fx-background-color: white;">
+         <children>
+            <Label alignment="CENTER" contentDisplay="CENTER" prefHeight="30.0" prefWidth="180.0" text="Dysk 2">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ListView fx:id="disk2" layoutY="30.0" prefHeight="190.0" prefWidth="190.0" />
+         </children>
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+      </AnchorPane>
+      <AnchorPane layoutX="526.0" layoutY="270.0" prefHeight="230.0" prefWidth="180.0" style="-fx-background-color: white;">
+         <effect>
+            <Lighting>
+               <bumpInput>
+                  <Shadow />
+               </bumpInput>
+               <light>
+                  <Light.Distant />
+               </light>
+            </Lighting>
+         </effect>
+         <children>
+            <Label alignment="CENTER" prefHeight="30.0" prefWidth="180.0" text="Dysk 3">
+               <font>
+                  <Font size="20.0" />
+               </font>
+            </Label>
+            <ListView fx:id="disk3" layoutY="30.0" prefHeight="190.0" prefWidth="190.0" />
+         </children>
+      </AnchorPane>
+      <Label layoutX="66.0" layoutY="125.0" prefHeight="17.0" prefWidth="317.0" text="Dane wejściowe:" textFill="WHITE">
          <font>
             <Font size="20.0" />
          </font>
       </Label>
-      <Button layoutX="555.0" layoutY="84.0" mnemonicParsing="false" onAction="#findFile" text="..." />
-      <Button fx:id="bWriteData" layoutX="64.0" layoutY="240.0" mnemonicParsing="false" onAction="#putDataOnDisks" prefHeight="25.0" prefWidth="210.0" text="Wpisz dane na dyski" />
-      <Button fx:id="bCalculateParity" layoutX="285.0" layoutY="240.0" mnemonicParsing="false" onAction="#calculateParity" prefHeight="25.0" prefWidth="210.0" text="Zapisz bity parzystości" />
-      <Button fx:id="bRecoverDisk" layoutX="506.0" layoutY="240.0" mnemonicParsing="false" onAction="#recoverDisk" prefHeight="25.0" prefWidth="210.0" text="Odzyskaj dane" />
-      <Button fx:id="bChangeDisk1" layoutX="64.0" layoutY="550.0" mnemonicParsing="false" onAction="#changeDisk1" prefHeight="25.0" prefWidth="190.0" text="Wymień dysk" />
-      <Button fx:id="bChangeDisk2" layoutX="296.0" layoutY="550.0" mnemonicParsing="false" onAction="#changeDisk2" prefHeight="25.0" prefWidth="190.0" text="Wymień dysk" />
-      <Button fx:id="bChangeDisk3" layoutX="526.0" layoutY="550.0" mnemonicParsing="false" onAction="#changeDisk3" prefHeight="25.0" prefWidth="190.0" text="Wymień dysk" />
-      <Label fx:id="labelError" layoutX="144.0" layoutY="209.0" prefHeight="88.0" prefWidth="513.0" text="UTRACONO DANE" textFill="#ae2020">
+      <Label fx:id="labelError" layoutX="144.0" layoutY="195.0" prefHeight="88.0" prefWidth="513.0" text="UTRACONO DANE" textFill="#ae2020">
          <font>
             <Font size="60.0" />
          </font>
       </Label>
+      <Button fx:id="bInjectErrors1" layoutX="64.0" layoutY="513.0" mnemonicParsing="false" onAction="#injectErrors1" prefHeight="25.0" prefWidth="145.0" text="Wstrzyknij błędy w liczbie:">
+         <font>
+            <Font size="11.0" />
+         </font></Button>
+      <Button fx:id="bInjectErrors2" layoutX="296.0" layoutY="513.0" mnemonicParsing="false" onAction="#injectErrors2" prefHeight="25.0" prefWidth="145.0" text="Wstrzyknij błędy w liczbie:">
+         <font>
+            <Font size="11.0" />
+         </font></Button>
+      <Button fx:id="bInjectErrors3" layoutX="526.0" layoutY="513.0" mnemonicParsing="false" onAction="#injectErrors3" prefHeight="25.0" prefWidth="145.0" text="Wstrzyknij błędy w liczbie:">
+         <font>
+            <Font size="11.0" />
+         </font></Button>
+      <Button fx:id="bChangeDisk1" layoutX="64.0" layoutY="545.0" mnemonicParsing="false" onAction="#changeDisk1" prefHeight="25.0" prefWidth="190.0" text="Wymień dysk" />
+      <Button fx:id="bChangeDisk2" layoutX="296.0" layoutY="545.0" mnemonicParsing="false" onAction="#changeDisk2" prefHeight="25.0" prefWidth="190.0" text="Wymień dysk" />
+      <Button fx:id="bChangeDisk3" layoutX="526.0" layoutY="545.0" mnemonicParsing="false" onAction="#changeDisk3" prefHeight="25.0" prefWidth="190.0" text="Wymień dysk" />
+      <TextField fx:id="numberOfErrors1" layoutX="214.0" layoutY="513.0" prefHeight="25.0" prefWidth="40.0" text="1" />
+      <TextField fx:id="numberOfErrors2" layoutX="446.0" layoutY="513.0" prefHeight="25.0" prefWidth="40.0" text="1" />
+      <TextField fx:id="numberOfErrors3" layoutX="676.0" layoutY="513.0" prefHeight="25.0" prefWidth="40.0" text="1" />
    </children>
 </AnchorPane>

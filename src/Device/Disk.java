@@ -11,8 +11,8 @@ public class Disk {
 	public Disk(String name, List<String> data) {
 		super();
 		this.id = ++numberOfDisks;
+        this.data = data;
 		this.name = name;
-		this.data = data;
 	}
 	
 	@Override

@@ -1,7 +1,5 @@
 package application;
-	
-import Device.Disk;
-import Device.Raid;
+
 import io.Raport;
 import javafx.application.Application;
 import javafx.fxml.FXMLLoader;

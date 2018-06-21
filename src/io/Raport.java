@@ -3,7 +3,6 @@ package io;
 import java.io.FileNotFoundException;
 import java.io.PrintWriter;
 import java.time.LocalDateTime;
-import java.time.LocalTime;
 
 import Device.Disk;
 
@@ -59,8 +58,6 @@ public class Raport {
             zapis.println("Disk id: "+disk[2].getId());
             zapis.println("Disk name: "+disk[2].getName());
             zapis.println("Disk data: "+disk[2].getData()+"\n");
-
-
 
 
     }
