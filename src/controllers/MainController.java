@@ -247,7 +247,7 @@ public class MainController {
     @FXML
     public void injectErrors1(){
         ObservableList<String> obsDisk1 = disk1.getItems();
-        ObservableList<String> oinputbsDisk2 = disk2.getItems();
+        ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
         disk1.setItems(generateErrorsBits(obsDisk1, numberOfErrors1, indexesOfErrorBits1, indexesOfErrorSequenceBits1, 1, invalidNumber1));
         if (indexesOfErrorBits1.size()==obsDisk1.size()*4) {
@@ -503,6 +503,10 @@ public class MainController {
 
     @FXML
     public void retrieveData(){
+        spoiledDisk--;
+        lastSpoiledDisk=0;
+        bRecoverDisk.setDisable(true);
+
         ObservableList<String> obsDisk1 = getRelevantData(disk1.getItems());
         ObservableList<String> obsDisk2 = getRelevantData(disk2.getItems());
         ObservableList<String> obsDisk3 = getRelevantData(disk3.getItems());
@@ -540,6 +544,22 @@ public class MainController {
         disk1.setItems(obsDisk1);
         disk2.setItems(obsDisk2);
         disk3.setItems(obsDisk3);
+
+        bInjectErrors1.setDisable(false);
+        numberOfErrors1.setDisable(false);
+        bInjectErrors2.setDisable(false);
+        numberOfErrors2.setDisable(false);
+        bInjectErrors3.setDisable(false);
+        numberOfErrors3.setDisable(false);
+        indexesOfErrorBits1=new LinkedList<Integer>();
+        indexesOfErrorBits2=new LinkedList<Integer>();
+        indexesOfErrorBits3=new LinkedList<Integer>();
+
+        indexesOfErrorSequenceBits1= new HashSet<Integer>();
+        indexesOfErrorSequenceBits2= new HashSet<Integer>();
+        indexesOfErrorSequenceBits3= new HashSet<Integer>();
+
+        writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER RECOVERY");
 
     }
 
