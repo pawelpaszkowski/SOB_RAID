@@ -25,6 +25,7 @@ public class MainController {
 	private int spoiledDisk=0;
 	private int lastSpoiledDisk=0;
 	private LinkedList <Integer> indexesOfErrorBits1, indexesOfErrorBits2, indexesOfErrorBits3;
+    private HashSet <Integer> indexesOfErrorSequenceBits1, indexesOfErrorSequenceBits2, indexesOfErrorSequenceBits3;
 	//
     private HashSet<Integer> indexErrorInDisk;
     private boolean possibleToRetrieve = true;
@@ -69,6 +70,10 @@ public class MainController {
         indexesOfErrorBits1=new LinkedList<Integer>();
         indexesOfErrorBits2=new LinkedList<Integer>();
         indexesOfErrorBits3=new LinkedList<Integer>();
+
+        indexesOfErrorSequenceBits1= new HashSet<Integer>();
+        indexesOfErrorSequenceBits2= new HashSet<Integer>();
+        indexesOfErrorSequenceBits3= new HashSet<Integer>();
         //
         indexErrorInDisk = new HashSet<>();
 		
@@ -244,11 +249,12 @@ public class MainController {
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> oinputbsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
-        disk1.setItems(generateErrorsBits(obsDisk1, numberOfErrors1, indexesOfErrorBits1, 1, invalidNumber1));
+        disk1.setItems(generateErrorsBits(obsDisk1, numberOfErrors1, indexesOfErrorBits1, indexesOfErrorSequenceBits1, 1, invalidNumber1));
         if (indexesOfErrorBits1.size()==obsDisk1.size()*4) {
             spoiledDisk++;
             lastSpoiledDisk=1;
         }
+        indexesOfErrorSequenceBits1.forEach(System.out::println);
 	}
 
     @FXML
@@ -256,11 +262,12 @@ public class MainController {
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
-        disk2.setItems(generateErrorsBits(obsDisk2, numberOfErrors2, indexesOfErrorBits2, 2, invalidNumber2));
+        disk2.setItems(generateErrorsBits(obsDisk2, numberOfErrors2, indexesOfErrorBits2, indexesOfErrorSequenceBits2, 2, invalidNumber2));
         if (indexesOfErrorBits2.size()==obsDisk1.size()*4) {
             spoiledDisk++;
             lastSpoiledDisk=2;
         }
+        indexesOfErrorSequenceBits2.forEach(System.out::println);
 	}
 
     @FXML
@@ -268,14 +275,18 @@ public class MainController {
         ObservableList<String> obsDisk1 = disk1.getItems();
         ObservableList<String> obsDisk2 = disk2.getItems();
         ObservableList<String> obsDisk3 = disk3.getItems();
-        disk3.setItems(generateErrorsBits(obsDisk3, numberOfErrors3, indexesOfErrorBits3, 3, invalidNumber3));
+        disk3.setItems(generateErrorsBits(obsDisk3, numberOfErrors3, indexesOfErrorBits3, indexesOfErrorSequenceBits3, 3, invalidNumber3));
         if (indexesOfErrorBits3.size() == obsDisk1.size() * 4) {
             spoiledDisk++;
             lastSpoiledDisk = 3;
         }
+        indexesOfErrorSequenceBits3.forEach(System.out::println);
 	}
 
-    public ObservableList<String> generateErrorsBits(ObservableList<String> obsDisk, TextField numberOfErrors,LinkedList <Integer> indexesOfErrorBits, int indexOfDisk, Label invalidNumber){
+    public ObservableList<String> generateErrorsBits(ObservableList<String> obsDisk, TextField numberOfErrors,
+                                                     LinkedList <Integer> indexesOfErrorBits,
+                                                     HashSet <Integer> indexesOfErrorSequenceBits,
+                                                     int indexOfDisk, Label invalidNumber){
         Random random=new Random();
         int topIndex=obsDisk.size()*4;
 //        int numberOfBits=random.nextInt(topIdnex)+1;
@@ -290,12 +301,15 @@ public class MainController {
                 randomIndex = random.nextInt(topIndex);
                 if (!indexesOfErrorBits.contains(randomIndex)) {
                     indexesOfErrorBits.add(randomIndex);
+                   // System.out.println("INDEX SEKWENCJI: "+randomIndex+" "+randomIndex/4);
+                    indexesOfErrorSequenceBits.add(randomIndex/4);
                     i++;
                 }
             }
 
-            for (int i = 0; i < indexesOfErrorBits.size(); i++)
-                System.out.println(indexesOfErrorBits.get(i) + ", ");
+            for (int i = 0; i < indexesOfErrorBits.size(); i++){
+                //System.out.println(indexesOfErrorBits.get(i) + ", ");
+            }
 
             for (int i = 0; i < obsDisk.size(); i++) {
                 String portionOfBits = "";
@@ -329,6 +343,7 @@ public class MainController {
             else
                 invalidNumber.setVisible(false);
         }
+
 
         return obsDisk;
     }
@@ -496,28 +511,35 @@ public class MainController {
             System.out.println(obsDisk1.get(i));
         }
 
-        System.out.println(possibleToRetrieve);
-        if(possibleToRetrieve == true){
-            for(int i=0; i < obsDisk1.size(); i++){
-                if(obsDisk1.get(i).contains("X")){
+
+        for(int i=0; i < obsDisk1.size(); i++){
+            if(obsDisk1.get(i).contains("X")){
+                if(!indexesOfErrorSequenceBits2.contains(i) && !indexesOfErrorSequenceBits3.contains(i)){
                     obsDisk1.set(i,Raid.xor(obsDisk2.get(i), obsDisk3.get(i)));
-                }
-                if(obsDisk2.get(i).contains("X")){
-                    obsDisk2.set(i,Raid.xor(obsDisk1.get(i), obsDisk3.get(i)));
-                }
-                if(obsDisk3.get(i).contains("X")) {
-                    obsDisk3.set(i,Raid.xor(obsDisk1.get(i), obsDisk2.get(i)));
+                } else {
+                    labelError.setVisible(true);
                 }
             }
-            disk1.setItems(obsDisk1);
-            disk2.setItems(obsDisk2);
-            disk3.setItems(obsDisk3);
-        } else {
-            System.out.println("NOPE");
+            if(obsDisk2.get(i).contains("X") ){
+                if(!indexesOfErrorSequenceBits1.contains(i) && !indexesOfErrorSequenceBits3.contains(i)){
+                    obsDisk2.set(i,Raid.xor(obsDisk1.get(i), obsDisk3.get(i)));
+                } else {
+                    labelError.setVisible(true);
+                }
+
+            }
+            if(obsDisk3.get(i).contains("X")) {
+                if(!indexesOfErrorSequenceBits1.contains(i) && !indexesOfErrorSequenceBits2.contains(i)){
+                    obsDisk3.set(i,Raid.xor(obsDisk1.get(i), obsDisk2.get(i)));
+                } else {
+                    labelError.setVisible(true);
+                }
+            }
         }
 
-
-
+        disk1.setItems(obsDisk1);
+        disk2.setItems(obsDisk2);
+        disk3.setItems(obsDisk3);
 
     }
 
