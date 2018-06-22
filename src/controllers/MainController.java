@@ -2,10 +2,8 @@ package controllers;
 
 import java.io.File;
 import java.io.FileNotFoundException;
-import java.util.LinkedList;
-import java.util.List;
-import java.util.Random;
-import java.util.Scanner;
+import java.util.*;
+import java.util.stream.Collectors;
 
 import Device.Disk;
 import Device.Raid;
@@ -27,7 +25,10 @@ public class MainController {
 	private int spoiledDisk=0;
 	private int lastSpoiledDisk=0;
 	private LinkedList <Integer> indexesOfErrorBits;
-	
+	//
+    private HashSet<Integer> indexErrorInDisk;
+    private boolean possibleToRetrieve = true;
+
 	@FXML
 	private AnchorPane mainPane;
 
@@ -63,6 +64,8 @@ public class MainController {
         numberOfErrors2.setDisable(true);
         numberOfErrors3.setDisable(true);
         indexesOfErrorBits=new LinkedList<Integer>();
+        //
+        indexErrorInDisk = new HashSet<>();
 		
 		//all will be move to controller 
 		disks=new Disk[3];
@@ -288,8 +291,14 @@ public class MainController {
             for (int i = 0; i < obsDisk.size(); i++) {
                 String portionOfBits = "";
                 for (int j = i * 4; j < i * 4 + 4; j++)
-                    if (indexesOfErrorBits.contains(j))
+                    if (indexesOfErrorBits.contains(j)){
                         portionOfBits += "X";
+                        if(!indexErrorInDisk.contains(i)){
+                            indexErrorInDisk.add(i);
+                        } else {
+                            possibleToRetrieve = true;
+                        }
+                    }
                     else
                         portionOfBits += obsDisk.get(i).substring(j - (i * 4), j - (i * 4) + 1);
 
@@ -329,6 +338,7 @@ public class MainController {
     @FXML
 	public void putDataOnDisks(){
 	    bCalculateParity.setDisable(false);
+	    possibleToRetrieve = true;
 		int index = 0;
 		List<String> dividedData1 = new LinkedList<>();
 		List<String> dividedData2 = new LinkedList<>();
@@ -434,6 +444,49 @@ public class MainController {
         disks[2].setData(obsDisk3.subList(0, obsDisk3.size()));
         Raport.writeDisks(disks, s);
     }
+
+    private ObservableList<String> getRelevantData(ObservableList<String> dataFromDisk){
+	    ObservableList<String> relevantData = dataFromDisk.stream()
+                                                            .map(s -> s.substring(0,4))
+                                                            .collect(Collectors.toCollection(FXCollections::observableArrayList));
+	    return relevantData;
+    }
+
+    @FXML
+    public void retrieveData(){
+        ObservableList<String> obsDisk1 = getRelevantData(disk1.getItems());
+        ObservableList<String> obsDisk2 = getRelevantData(disk2.getItems());
+        ObservableList<String> obsDisk3 = getRelevantData(disk3.getItems());
+
+        for(int i=0; i < obsDisk1.size(); i++) {
+            System.out.println(obsDisk1.get(i));
+        }
+
+        System.out.println(possibleToRetrieve);
+        if(possibleToRetrieve == true){
+            for(int i=0; i < obsDisk1.size(); i++){
+                if(obsDisk1.get(i).contains("X")){
+                    obsDisk1.set(i,Raid.xor(obsDisk2.get(i), obsDisk3.get(i)));
+                }
+                if(obsDisk2.get(i).contains("X")){
+                    obsDisk2.set(i,Raid.xor(obsDisk1.get(i), obsDisk3.get(i)));
+                }
+                if(obsDisk3.get(i).contains("X")) {
+                    obsDisk3.set(i,Raid.xor(obsDisk1.get(i), obsDisk2.get(i)));
+                }
+            }
+            disk1.setItems(obsDisk1);
+            disk2.setItems(obsDisk2);
+            disk3.setItems(obsDisk3);
+        } else {
+            System.out.println("NOPE");
+        }
+
+
+
+
+    }
+
 	public void setScreen(AnchorPane anchorPane){
 
 		mainPane.getChildren().add(anchorPane);
