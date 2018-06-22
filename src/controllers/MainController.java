@@ -255,6 +255,7 @@ public class MainController {
             lastSpoiledDisk=1;
         }
         indexesOfErrorSequenceBits1.forEach(System.out::println);
+        bRecoverDisk.setDisable(false);
 	}
 
     @FXML
@@ -268,6 +269,7 @@ public class MainController {
             lastSpoiledDisk=2;
         }
         indexesOfErrorSequenceBits2.forEach(System.out::println);
+        bRecoverDisk.setDisable(false);
 	}
 
     @FXML
@@ -281,6 +283,7 @@ public class MainController {
             lastSpoiledDisk = 3;
         }
         indexesOfErrorSequenceBits3.forEach(System.out::println);
+        bRecoverDisk.setDisable(false);
 	}
 
     public ObservableList<String> generateErrorsBits(ObservableList<String> obsDisk, TextField numberOfErrors,
@@ -346,37 +349,6 @@ public class MainController {
 
 
         return obsDisk;
-    }
-
-    @FXML
-    public void recoverDisk(){
-        spoiledDisk--;
-        lastSpoiledDisk=0;
-        bRecoverDisk.setDisable(true);
-        ObservableList<String> obsDisk1 = disk1.getItems();
-        ObservableList<String> obsDisk2 = disk2.getItems();
-        ObservableList<String> obsDisk3 = disk3.getItems();
-        if(obsDisk1.contains("XXXX")){
-            for(int i=0; i < obsDisk1.size(); i++){
-                obsDisk1.set(i,Raid.xor(obsDisk2.get(i), obsDisk3.get(i)));
-            }
-        } else if(obsDisk2.contains("XXXX")){
-            for(int i=0; i < obsDisk2.size(); i++){
-                obsDisk2.set(i,Raid.xor(obsDisk1.get(i), obsDisk3.get(i)));
-            }
-        } else if(obsDisk3.contains("XXXX")){
-            for(int i=0; i < obsDisk3.size(); i++){
-                obsDisk3.set(i,Raid.xor(obsDisk1.get(i), obsDisk2.get(i)));
-            }
-        }
-
-        bInjectErrors1.setDisable(false);
-        numberOfErrors1.setDisable(false);
-        bInjectErrors2.setDisable(false);
-        numberOfErrors2.setDisable(false);
-        bInjectErrors3.setDisable(false);
-        numberOfErrors3.setDisable(false);
-        writeToRaport(obsDisk1, obsDisk2, obsDisk3, "DISK STATE AFTER RECOVERY");
     }
 
     @FXML
@@ -502,7 +474,7 @@ public class MainController {
     }
 
     @FXML
-    public void retrieveData(){
+    public void recoverDisk(){
         spoiledDisk--;
         lastSpoiledDisk=0;
         bRecoverDisk.setDisable(true);

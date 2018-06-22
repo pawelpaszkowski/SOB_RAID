@@ -142,7 +142,6 @@
       <TextField fx:id="numberOfErrors1" layoutX="214.0" layoutY="513.0" prefHeight="25.0" prefWidth="40.0" text="1" />
       <TextField fx:id="numberOfErrors2" layoutX="446.0" layoutY="513.0" prefHeight="25.0" prefWidth="40.0" text="1" />
       <TextField fx:id="numberOfErrors3" layoutX="676.0" layoutY="513.0" prefHeight="25.0" prefWidth="40.0" text="1" />
-      <Button layoutX="78.0" layoutY="80.0" mnemonicParsing="false" onAction="#retrieveData" text="Odzyskaj wszystkie dane" />
       <Label fx:id="invalidNumber1" layoutX="257.0" layoutY="499.0" text="!" textFill="RED">
          <font>
             <Font size="36.0" />
